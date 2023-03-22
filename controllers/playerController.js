@@ -2,7 +2,7 @@ const Player = require("../models/player");
 
 exports.player_list = async (req, res, next) => {
   try {
-    const players = await Player.find({ club: "Newcastle United" });
+    const players = await Player.find().populate("club");
     res.render("player", { title: "All Players", players });
   } catch (err) {
     return next(err);
