@@ -1,7 +1,12 @@
 const Player = require("../models/player");
 
-exports.player_list = (req, res, next) => {
-  res.send("PLAYER LIST");
+exports.player_list = async (req, res, next) => {
+  try {
+    const players = await Player.find({ club: "Newcastle United" });
+    res.render("player", { title: "All Players", players });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 exports.player_create_get = (req, res, next) => {

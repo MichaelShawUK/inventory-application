@@ -6,7 +6,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
 
-mongoose.set("strictQuery", false);
+// mongoose.set("strictQuery", false);
 const mongoDB = process.env.MONGODB_CONNECT;
 main().catch((err) => console.log(err));
 async function main() {
