@@ -9,10 +9,12 @@
 
     <% if (players.length > 0) { %> 
       <% for (let player of players) { %>
+        <img style="height:100px;width:100px" src=<%= player.imageUrl %>>
         <h3><%= player.name %> - <%=player.rating %></h3>
         <p><%= player.club.name %></p>
         <p><%= player.position %></p>
         <p><%= player.country %></p>
+        <hr>
       <% } %> 
     <% } %>
   </body>
