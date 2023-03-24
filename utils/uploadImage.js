@@ -18,36 +18,22 @@ cloudinary.config({
   secure: true,
 });
 
-// async function getPlayerInfo(name) {
-//   try {
-//     const playerInfo = await Player.findOne({ name });
-//     return playerInfo;
-//   } catch (err) {
-//     console.error(err);
-//   }
-// }
-
-// async function getClubInfo(name) {
-//   try {
-//     const playerInfo = await Player.findOne({ name });
-//     return playerInfo;
-//   } catch (err) {
-//     console.error(err);
-//   }
-// }
-
-async function getInfo(name, model) {
+async function getInfo(name, collection) {
+  //Retrieves document matching NAME field from COLLECTION
   try {
-    const info = await model.findOne({ name });
+    const info = await collection.findOne({ name });
     return info;
   } catch (err) {
     console.error(err);
   }
 }
 
-async function uploadImage(docName, model, imagePath, folder) {
+async function uploadImage(document, collection, folder) {
+  // Function uploads image to cloudinary with image id matching mongoDB id
+  // DOCUMENT is object with name and url of remote image as properties
+  // FOLDER states where to save image in cloudinary file structure
   try {
-    const info = await getInfo(docName, model);
+    const info = await getInfo(document.name, collection);
     if (!info) {
       throw new Error("Could not find document");
     }
@@ -62,7 +48,7 @@ async function uploadImage(docName, model, imagePath, folder) {
       folder,
     };
 
-    const result = await cloudinary.uploader.upload(imagePath, options);
+    const result = await cloudinary.uploader.upload(document.url, options);
     console.log(result);
   } catch (err) {
     console.error(err);
@@ -71,72 +57,7 @@ async function uploadImage(docName, model, imagePath, folder) {
 
 (async () => {
   for (const club of clubImages) {
-    await uploadImage(club.name, Club, club.url, "clubs");
+    await uploadImage(club, Club, "clubs");
   }
   mongoose.connection.close();
 })();
-
-// async function uploadPlayerImage(player, imagePath) {
-//   try {
-//     const playerInfo = await getPlayerInfo(player);
-//     if (!playerInfo) {
-//       throw new Error("Player not found");
-//     }
-//     const id = playerInfo._id.toString();
-//     const name = playerInfo.name.split(" ").join("");
-
-//     const options = {
-//       public_id: id,
-//       display_name: name,
-//       unique_filename: false,
-//       overwrite: true,
-//       folder: "players",
-//     };
-
-//     const result = await cloudinary.uploader.upload(imagePath, options);
-//     console.log(result);
-//   } catch (err) {
-//     console.error(err);
-//   }
-// }
-
-// async function uploadClubImage(club, imagePath) {
-//   try {
-//     const playerInfo = await getPlayerInfo(player);
-//     if (!playerInfo) {
-//       throw new Error("Player not found");
-//     }
-//     const id = playerInfo._id.toString();
-//     const name = playerInfo.name.split(" ").join("");
-
-//     const options = {
-//       public_id: id,
-//       display_name: name,
-//       unique_filename: false,
-//       overwrite: true,
-//       folder: "players",
-//     };
-
-//     const result = await cloudinary.uploader.upload(imagePath, options);
-//     console.log(result);
-//   } catch (err) {
-//     console.error(err);
-//   }
-// }
-
-// (async () => {
-//   for (const player of playerImages) {
-//     await uploadPlayerImage(player.name, player.url);
-//   }
-//   mongoose.connection.close();
-// })();
-
-// (async () => {
-//   try {
-//     const result = await Club.find({}, { name: 1, _id: 0 });
-//     console.log(result);
-//     mongoose.connection.close();
-//   } catch (err) {
-//     console.error(err);
-//   }
-// })();
