@@ -3,7 +3,7 @@ const Player = require("../models/player");
 exports.player_list = async (req, res, next) => {
   try {
     const players = await Player.find().populate("club");
-    res.render("player", { title: "All Players", players });
+    res.render("players", { title: "All Players", players });
   } catch (err) {
     return next(err);
   }
@@ -33,6 +33,11 @@ exports.player_update_post = (req, res, next) => {
   res.send("PLAYER UPDATE POST");
 };
 
-exports.player_info = (req, res, next) => {
-  res.send("PLAYER INFO");
+exports.player_info = async (req, res, next) => {
+  try {
+    const player = await Player.findById(req.params.id).populate("club");
+    res.render("player", { title: "PLAYER", player });
+  } catch (err) {
+    return next(err);
+  }
 };

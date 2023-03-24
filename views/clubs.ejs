@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <% include header %>
+    <a href="/club/create">Add Club</a>
+
+    <h1><%= title %></h1>
+
+    <% if (clubs.length > 0) { %> 
+      <% for (let club of clubs) { %>
+        <a href=<%= club.url %>>
+          <img style="height:100px;width:100px" src=<%= club.imageUrl %>>
+          <h3><%= club.name %></h3>
+        </a>
+        <hr>
+      <% } %> 
+    <% } %>
+  </body>
+</html>

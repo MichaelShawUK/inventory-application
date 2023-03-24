@@ -55,9 +55,11 @@ async function uploadImage(document, collection, folder) {
   }
 }
 
-(async () => {
-  for (const club of clubImages) {
-    await uploadImage(club, Club, "clubs");
-  }
-  mongoose.connection.close();
-})();
+// (async () => {
+//   for (const club of clubImages) {
+//     await uploadImage(club, Club, "clubs");
+//   }
+//   mongoose.connection.close();
+// })();
+
+module.exports = uploadImage;

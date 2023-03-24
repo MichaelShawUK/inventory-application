@@ -5,18 +5,18 @@
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <h1><%= title %></h1>
+    <% include header %>
 
-    <% if (players.length > 0) { %> 
-      <% for (let player of players) { %>
-        <img style="height:100px;width:100px" src=<%= player.imageUrl %>>
-        <h3><%= player.name %> - <%=player.rating %></h3>
-        <img style="height:60px;width:60px" src=<%= player.club.imageUrl %>>
-        <p><%= player.club.name %></p>
-        <p><%= player.position %></p>
-        <p><%= player.country %></p>
-        <hr>
-      <% } %> 
-    <% } %>
+    <h1><%= player.name %></h1>
+    <img style="height:100px;width:100px" src=<%= player.imageUrl %>>
+    <h3><%=player.rating %></h3>
+    <a href=<%= player.club.url %>>
+      <img style="height:60px;width:60px" src=<%= player.club.imageUrl %>>
+      <p><%= player.club.name %></p>
+    </a>
+    <p><%= player.position %></p>
+    <p><%= player.country %></p>
+    <hr>
+
   </body>
 </html>

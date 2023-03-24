@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <% include header %>
+    <a href=<%= "/club/"+club._id+"/update" %>>Update Club</a>
+    <h1><%= club.name %></h1>
+    <img style="height:100px;width:100px" src=<%= club.imageUrl %>>
+    <p>Stadium: <%= club.stadium %></p>
+    <p>Founded: <%= club.founded %></p>
+    <hr>
+    <h2>Players</h2>
+    <% if (players.length > 0) { %> 
+      <% for (let player of players) { %>
+        <a href=<%= player.url %>>
+          <img style="height:100px;width:100px" src=<%= player.imageUrl %>>
+          <h3><%= player.name %> - <%=player.rating %></h3>
+        </a>
+        <hr>
+      <% } %> 
+    <% } %>
+
+  </body>
+</html>

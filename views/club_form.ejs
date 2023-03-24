@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <% include header %>
+    <form method="POST" action="">
+      <label for="name">Name: </label>
+      <input id="name" type="text" name="name" value="<%= (club) ? club.name : "" %>">
+      <label for="stadium">Stadium: </label>
+      <input id="stadium" type="text" name="stadium" value="<%= (club) ? club.stadium : "" %>">
+      <label for="founded">Year Founded: </label>
+      <input id="founded" type="text" name="founded" value="<%= (club) ? club.founded : "" %>">
+      <label for="image">Club Badge URL: </label>
+      <input id="image" type="text" name="image" value="<%= (club) ? club.imageUrl : "" %>">
+      <button type="sumit"><%= (club) ? "Update Club" : "Add Club" %></button>
+    </form>
+
+  </body>
+</html>
