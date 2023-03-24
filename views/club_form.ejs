@@ -6,6 +6,7 @@
   </head>
   <body>
     <% include header %>
+    <h1><%= title %></h1>
     <form method="POST" action="">
       <label for="name">Name: </label>
       <input id="name" type="text" name="name" value="<%= (club) ? club.name : "" %>">
@@ -17,6 +18,12 @@
       <input id="image" type="text" name="image" value="<%= (club) ? club.imageUrl : "" %>">
       <button type="sumit"><%= (club) ? "Update Club" : "Add Club" %></button>
     </form>
+
+    <ul>
+    <% for (const error of errors) { %>
+      <li><%= error.msg %></li>
+    <% } %>
+    </ul>
 
   </body>
 </html>

@@ -1,6 +1,7 @@
 const Club = require("../models/club");
 const Player = require("../models/player");
 const uploadImage = require("../utils/uploadImage");
+const { body, validationResult } = require("express-validator");
 
 exports.club_list = async (req, res, next) => {
   try {
@@ -13,23 +14,55 @@ exports.club_list = async (req, res, next) => {
 
 exports.club_create_get = (req, res, next) => {
   const club = null;
-  res.render("club_form", { title: "Add Club", club });
+  res.render("club_form", { title: "Add Club", club, errors: [] });
 };
 
-exports.club_create_post = async (req, res, next) => {
-  const { name, stadium, founded } = req.body;
-  try {
-    await Club.create({ name, stadium, founded });
-    await uploadImage({ name, url: req.body.image }, Club, "clubs");
-    res.redirect("/club");
-  } catch (err) {
-    return next(err);
-  }
-};
+exports.club_create_post = [
+  body("name", "Enter valid club name").trim().isLength({ min: 1 }),
+  body("stadium", "Enter valid stadium name").trim().isLength({ min: 1 }),
+  body("founded", "Enter year in YYYY format").trim().isLength(4),
+  body("image", "Enter valid URL for club badge").trim().isURL(),
 
-exports.club_delete_get = (req, res, next) => {
-  res.send("CLUB DELETE GET");
-};
+  async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render("club_form", {
+        title: "Add Club",
+        club: {
+          name: req.body.name,
+          stadium: req.body.stadium,
+          founded: req.body.founded,
+          imageUrl: req.body.image,
+        },
+        errors: errors.array(),
+      });
+      return;
+    }
+    const { name, stadium, founded } = req.body;
+    try {
+      await Club.create({ name, stadium, founded });
+      await uploadImage({ name, url: req.body.image }, Club, "clubs");
+      res.redirect("/club");
+    } catch (err) {
+      return next(err);
+    }
+  },
+];
+
+exports.club_delete_get = [
+  (req, res, next) => {
+    req.fruit = "apple";
+    next();
+  },
+  (req, res, next) => {
+    req.vegetable = "brocoli";
+    next();
+  },
+  (req, res, next) => {
+    res.send(req.vegetable + req.fruit);
+  },
+];
 
 exports.club_delete_post = (req, res, next) => {
   res.send("CLUB DELETE POST");
@@ -38,7 +71,7 @@ exports.club_delete_post = (req, res, next) => {
 exports.club_update_get = async (req, res, next) => {
   try {
     const club = await Club.findById(req.params.id);
-    res.render("club_form", { title: "Update Club", club });
+    res.render("club_form", { title: "Update Club", club, errors: [] });
   } catch (err) {
     return next(err);
   }
