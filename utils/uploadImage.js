@@ -28,6 +28,18 @@ async function getInfo(name, collection) {
   }
 }
 
+async function getImageUrl(image, folder) {
+  try {
+    const options = {
+      overwrite: true,
+      folder,
+    };
+
+    const result = await cloudinary.uploader.upload(image, options);
+    console.log(result.secure_url);
+  } catch (err) {}
+}
+
 async function uploadImage(document, collection, folder) {
   // Function uploads image to cloudinary with image id matching mongoDB id
   // DOCUMENT is object with name and url of remote image as properties

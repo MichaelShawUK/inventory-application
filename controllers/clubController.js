@@ -2,6 +2,7 @@ const Club = require("../models/club");
 const Player = require("../models/player");
 const uploadImage = require("../utils/uploadImage");
 const deleteImage = require("../utils/deleteImage");
+const getImageUrl = require("../utils/getImageUrl");
 const { body, validationResult } = require("express-validator");
 
 exports.club_list = async (req, res, next) => {
@@ -40,10 +41,10 @@ exports.club_create_post = [
       });
       return;
     }
-    const { name, stadium, founded } = req.body;
+    const { name, stadium, founded, image } = req.body;
     try {
-      await Club.create({ name, stadium, founded });
-      await uploadImage({ name, url: req.body.image }, Club, "clubs");
+      const imageUrl = await getImageUrl(image, "clubs");
+      await Club.create({ name, stadium, founded, image: imageUrl });
       res.redirect("/club");
     } catch (err) {
       return next(err);
@@ -60,7 +61,7 @@ exports.club_delete_get = async (req, res, next) => {
   }
 };
 
-exports.club_delete_post = (req, res, next) => {
+exports.club_delete_post = async (req, res, next) => {
   res.send("CLUB DELETE POST");
 };
 
