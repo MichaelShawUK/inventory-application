@@ -12,8 +12,4 @@ ClubSchema.virtual("url").get(function () {
   return `/club/${this._id}`;
 });
 
-// ClubSchema.virtual("imageUrl").get(function () {
-//   return `https://res.cloudinary.com/dzpobfxwj/image/upload/clubs/${this._id}.png`;
-// });
-
 module.exports = mongoose.model("Club", ClubSchema);

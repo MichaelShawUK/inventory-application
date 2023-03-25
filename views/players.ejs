@@ -12,7 +12,7 @@
     <% if (players.length > 0) { %> 
       <% for (let player of players) { %>
         <a href=<%= player.url %>>
-          <img style="height:100px;width:100px" src=<%= player.imageUrl %>>
+          <img style="height:100px;width:100px" src=<%= player.image %>>
           <h3><%= player.name %> - <%=player.rating %></h3>
         </a>
         <a href=<%= player.club.url %>>

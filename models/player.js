@@ -18,8 +18,4 @@ PlayerSchema.virtual("url").get(function () {
   return `/player/${this._id}`;
 });
 
-PlayerSchema.virtual("imageUrl").get(function () {
-  return `https://res.cloudinary.com/dzpobfxwj/image/upload/players/${this._id}.png`;
-});
-
 module.exports = mongoose.model("Player", PlayerSchema);
