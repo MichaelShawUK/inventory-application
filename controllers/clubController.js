@@ -1,6 +1,7 @@
 const Club = require("../models/club");
 const Player = require("../models/player");
 const uploadImage = require("../utils/uploadImage");
+const deleteImage = require("../utils/deleteImage");
 const { body, validationResult } = require("express-validator");
 
 exports.club_list = async (req, res, next) => {
@@ -50,19 +51,14 @@ exports.club_create_post = [
   },
 ];
 
-exports.club_delete_get = [
-  (req, res, next) => {
-    req.fruit = "apple";
-    next();
-  },
-  (req, res, next) => {
-    req.vegetable = "brocoli";
-    next();
-  },
-  (req, res, next) => {
-    res.send(req.vegetable + req.fruit);
-  },
-];
+exports.club_delete_get = async (req, res, next) => {
+  try {
+    const club = await Club.findById(req.params.id);
+    res.render("club_delete", { title: "Delete Club", club });
+  } catch (err) {
+    return next(err);
+  }
+};
 
 exports.club_delete_post = (req, res, next) => {
   res.send("CLUB DELETE POST");
@@ -77,8 +73,26 @@ exports.club_update_get = async (req, res, next) => {
   }
 };
 
-exports.club_update_post = (req, res, next) => {
-  res.send("CLUB UPDATE POST");
+exports.club_update_post = async (req, res, next) => {
+  try {
+    await Club.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        name: req.body.name,
+        stadium: req.body.stadium,
+        founded: req.body.founded,
+      }
+    );
+    await deleteImage(req.params.id);
+    await uploadImage(
+      { name: req.body.name, url: req.body.image },
+      Club,
+      "clubs"
+    );
+    res.redirect("/club");
+  } catch (err) {
+    return next(err);
+  }
 };
 
 exports.club_info = async (req, res, next) => {

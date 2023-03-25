@@ -13,7 +13,7 @@
     <% if (clubs.length > 0) { %> 
       <% for (let club of clubs) { %>
         <a href=<%= club.url %>>
-          <img style="height:100px;width:100px" src=<%= club.imageUrl %>>
+          <img style="height:100px;width:100px" src=<%= club.imageUrl %> alt="No available image">
           <h3><%= club.name %></h3>
         </a>
         <hr>

@@ -7,8 +7,9 @@
   <body>
     <% include header %>
     <a href=<%= "/club/"+club._id+"/update" %>>Update Club</a>
+    <a href=<%= "/club/"+club._id+"/delete" %>>Delete Club</a>
     <h1><%= club.name %></h1>
-    <img style="height:100px;width:100px" src=<%= club.imageUrl %>>
+    <img style="height:100px;width:100px" src=<%= club.imageUrl %> alt="No availabe image">
     <p>Stadium: <%= club.stadium %></p>
     <p>Founded: <%= club.founded %></p>
     <hr>
@@ -21,6 +22,9 @@
         </a>
         <hr>
       <% } %> 
+    <% } else { %>
+      <p><%= club.name %> have 0 players</p>
+      <a href="/player/create">Add Player</a>
     <% } %>
 
   </body>

@@ -49,7 +49,16 @@ async function uploadImage(document, collection, folder) {
     };
 
     const result = await cloudinary.uploader.upload(document.url, options);
+    await updateDocumentImage(id, collection, result.secure_url);
     console.log(result);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function updateDocumentImage(id, collection, url) {
+  try {
+    await collection.findOneAndUpdate({ _id: id }, { imageUrl: url });
   } catch (err) {
     console.error(err);
   }
