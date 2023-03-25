@@ -35,7 +35,7 @@ exports.club_create_post = [
           name: req.body.name,
           stadium: req.body.stadium,
           founded: req.body.founded,
-          imageUrl: req.body.image,
+          image: req.body.image,
         },
         errors: errors.array(),
       });
@@ -62,7 +62,12 @@ exports.club_delete_get = async (req, res, next) => {
 };
 
 exports.club_delete_post = async (req, res, next) => {
-  res.send("CLUB DELETE POST");
+  try {
+    await Club.deleteOne({ _id: req.body.id });
+    res.redirect("/club");
+  } catch (err) {
+    return next(err);
+  }
 };
 
 exports.club_update_get = async (req, res, next) => {
@@ -74,27 +79,53 @@ exports.club_update_get = async (req, res, next) => {
   }
 };
 
-exports.club_update_post = async (req, res, next) => {
-  try {
-    await Club.findOneAndUpdate(
-      { _id: req.params.id },
-      {
-        name: req.body.name,
-        stadium: req.body.stadium,
-        founded: req.body.founded,
+exports.club_update_post = [
+  body("name", "Enter valid club name").trim().isLength({ min: 1 }),
+  body("stadium", "Enter valid stadium name").trim().isLength({ min: 1 }),
+  body("founded", "Enter year in YYYY format").trim().isLength(4),
+  body("image", "Enter valid URL for club badge").trim().isURL(),
+
+  async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render("club_form", {
+        title: "Update Club",
+        club: {
+          name: req.body.name,
+          stadium: req.body.stadium,
+          founded: req.body.founded,
+          image: req.body.image,
+        },
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    try {
+      const old_club = await Club.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          name: req.body.name,
+          stadium: req.body.stadium,
+          founded: req.body.founded,
+          image: req.body.image,
+        }
+      );
+
+      if (old_club.image !== req.body.image) {
+        await uploadImage(
+          { name: req.body.name, url: req.body.image },
+          Club,
+          "clubs"
+        );
       }
-    );
-    await deleteImage(req.params.id);
-    await uploadImage(
-      { name: req.body.name, url: req.body.image },
-      Club,
-      "clubs"
-    );
-    res.redirect("/club");
-  } catch (err) {
-    return next(err);
-  }
-};
+      res.redirect("/club");
+    } catch (err) {
+      return next(err);
+    }
+  },
+];
 
 exports.club_info = async (req, res, next) => {
   try {
