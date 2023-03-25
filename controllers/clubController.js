@@ -55,7 +55,7 @@ exports.club_create_post = [
 exports.club_delete_get = async (req, res, next) => {
   try {
     const club = await Club.findById(req.params.id);
-    res.render("club_delete", { title: "Delete Club", club });
+    res.render("club_delete", { title: "Delete Club", club, players: [] });
   } catch (err) {
     return next(err);
   }
@@ -63,6 +63,17 @@ exports.club_delete_get = async (req, res, next) => {
 
 exports.club_delete_post = async (req, res, next) => {
   try {
+    const club = await Club.findById(req.params.id);
+    const players = await Player.find({ club: req.body.id });
+    console.log(players);
+    if (players.length > 0) {
+      res.render("club_delete", {
+        title: "Delete Club",
+        club,
+        players,
+      });
+      return;
+    }
     await Club.deleteOne({ _id: req.body.id });
     res.redirect("/club");
   } catch (err) {

@@ -13,11 +13,22 @@
     <p>Stadium: <%= club.stadium %></p>
     <p>Founded: <%= club.founded %></p>
     <hr>
-    <form method="POST" action="">
-      <p>Confirm you want to delete <%= club.name %>?</p>
-      <input id="id" name="id" type="text" hidden value=<%= club._id %>>
-      <button type="submit">Delete</button>
-    </form>
+
+    <% if (players.length > 0) { %>
+      <p>Must delete club's players before deleting club</p>
+      <ul>
+        <% for (const player of players) { %>
+          <li><a href=<%= player.url %>><%= player.name %></a></li>
+        <% } %>
+      </ul>
+      <% } else { %>
+
+      <form method="POST" action="">
+        <p>Confirm you want to delete <%= club.name %>?</p>
+        <input id="id" name="id" type="text" hidden value=<%= club._id %>>
+        <button type="submit">Delete</button>
+      </form>
+      <% } %>
 
   </body>
 </html>
