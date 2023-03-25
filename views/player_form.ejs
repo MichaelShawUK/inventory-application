@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <% include header %>
+    <h1><%= title %></h1>
+    <form method="POST" action="">
+      <label for="name">Name: </label>
+      <input id="name" type="text" name="name" value="<%= (player) ? player.name : "" %>">
+
+      <label for="position">Position: </label>
+      <select name="position" id="position">
+        <option value=null selected></option>
+        <option value="Goalkeeper">Goalkeeper</option>
+        <option value="Defender">Defender</option>
+        <option value="Midfielder">Midfielder</option>
+        <option value="Forward">Forward</option>
+      </select>
+
+      <label for="club">Club: </label>
+      <select name="club" id="club">
+        <option value=null selected></option>
+        <% for (const club of clubs) { %>
+          <option value=<%= club._id %>><%= club.name %></option>
+        <% } %>
+      </select>
+
+      <label for="country">Country: </label>
+      <input id="country" type="text" name="country" value="<%= (player) ? player.country : "" %>">
+
+      <label for="rating">Rating: </label>
+      <input id="rating" type="number" min="0" max="100" name="rating" value="<%= (player) ? player.rating : "" %>">
+
+      <label for="image">Player Image URL: </label>
+      <input id="image" type="text" name="image" value="<%= (player) ? player.image : "" %>">
+
+      <button type="sumit"><%= (player) ? "Update Player" : "Add Player" %></button>
+    </form>
+
+    <ul>
+    <% for (const error of errors) { %>
+      <li><%= error.msg %></li>
+    <% } %>
+    </ul>
+
+  </body>
+</html>

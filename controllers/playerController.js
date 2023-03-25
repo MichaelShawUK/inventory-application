@@ -1,4 +1,5 @@
 const Player = require("../models/player");
+const Club = require("../models/club");
 
 exports.player_list = async (req, res, next) => {
   try {
@@ -9,12 +10,25 @@ exports.player_list = async (req, res, next) => {
   }
 };
 
-exports.player_create_get = (req, res, next) => {
-  res.send("PLAYER CREATE GET");
+exports.player_create_get = async (req, res, next) => {
+  try {
+    const clubs = await Club.find({}, { name: 1 }).sort({
+      name: "asc",
+    });
+
+    res.render("player_form", {
+      title: "Add Player",
+      player: null,
+      clubs,
+      errors: [],
+    });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 exports.player_create_post = (req, res, next) => {
-  res.send("PLAYER CREATE POST");
+  res.send(req.body);
 };
 
 exports.player_delete_get = (req, res, next) => {

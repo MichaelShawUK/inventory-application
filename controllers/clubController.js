@@ -7,7 +7,7 @@ const { body, validationResult } = require("express-validator");
 
 exports.club_list = async (req, res, next) => {
   try {
-    const clubs = await Club.find();
+    const clubs = await Club.find().sort({ name: 1 });
     res.render("clubs", { title: "All Clubs", clubs });
   } catch (err) {
     return next(err);
