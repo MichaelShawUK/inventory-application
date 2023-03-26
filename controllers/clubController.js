@@ -141,7 +141,7 @@ exports.club_info = async (req, res, next) => {
   try {
     const club = await Club.findById(req.params.id);
     const players = await Player.find({ club: club._id });
-    res.render("club", { title: "Club", club, players });
+    res.render("club", { title: club.name, club, players });
   } catch (err) {
     return next(err);
   }

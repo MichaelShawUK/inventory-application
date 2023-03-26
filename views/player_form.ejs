@@ -24,7 +24,7 @@
       <select name="club" id="club">
         <option value=null selected></option>
         <% for (const club of clubs) { %>
-          <option value=<%= club._id %> <%= (player.club == club._id) ? "selected" : "" %>><%= club.name %></option>
+          <option value=<%= club._id %> <%= (`${player.club}` == `${club._id}`) ? "selected" : "" %>><%= club.name %></option>
         <% } %>
       </select>
 
