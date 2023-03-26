@@ -49,6 +49,7 @@ exports.player_create_post = [
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
+        // const club = await Club.findById(req.params.id);
         res.render("player_form", {
           title: "Add Player",
           player: {
@@ -103,8 +104,20 @@ exports.player_delete_post = async (req, res, next) => {
   }
 };
 
-exports.player_update_get = (req, res, next) => {
-  res.send("PLAYER UPDATE GET");
+exports.player_update_get = async (req, res, next) => {
+  try {
+    const player = await Player.findById(req.params.id).populate("club");
+    const club = player.club;
+    player.club = player.club._id;
+    res.render("player_form", {
+      title: "Update Player",
+      player,
+      errors: [],
+      clubs: [club],
+    });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 exports.player_update_post = (req, res, next) => {
