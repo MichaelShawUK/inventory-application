@@ -1,5 +1,6 @@
 const Player = require("../models/player");
 const Club = require("../models/club");
+const getImageUrl = require("../utils/getImageUrl");
 const { body, validationResult } = require("express-validator");
 
 exports.player_list = async (req, res, next) => {
@@ -19,7 +20,7 @@ exports.player_create_get = async (req, res, next) => {
 
     res.render("player_form", {
       title: "Add Player",
-      player: null,
+      player: {},
       clubs,
       errors: [],
     });
@@ -65,9 +66,19 @@ exports.player_create_post = [
       }
 
       const { name, position, club, country, rating, image } = req.body;
-      res.send(
-        `${typeof parseInt(req.body.rating)}: ${parseInt(req.body.rating)}`
-      );
+      const imageUrl = await getImageUrl(image, "players");
+      const clubDoc = await Club.findById(club);
+      const player = new Player({
+        name,
+        position,
+        club: clubDoc,
+        country,
+        rating: parseInt(rating),
+        image: imageUrl,
+      });
+
+      const playerDoc = await player.save();
+      res.redirect(`/player/${playerDoc._id.toString()}`);
     } catch (err) {
       return next(err);
     }
