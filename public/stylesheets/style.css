@@ -1,8 +1,56 @@
 body {
+  background: rgb(10, 71, 121);
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #fff;
 }
 
 a {
-  color: #00B7FF;
+  color: #fff;
+}
+
+.players,
+.clubs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  row-gap: 50px;
+  justify-content: center;
+}
+
+.player,
+.player > a,
+.club,
+.club > a {
+  display: grid;
+  justify-content: center;
+}
+
+.player img,
+.club img {
+  margin: 0 auto;
+}
+
+.player,
+.club {
+  box-shadow: 0 0 5px white;
+}
+
+.player a h3,
+.club a h3 {
+  text-align: center;
+}
+
+.club {
+  padding-top: 10px;
+}
+
+.player {
+  padding: 10px 0;
+}
+
+.player-avatar:hover,
+.player-club:hover,
+.club-tile:hover {
+  background-color: rgb(8, 61, 104);
+  border-radius: 10px;
 }

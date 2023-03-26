@@ -10,14 +10,19 @@
 
     <h1><%= title %></h1>
 
-    <% if (clubs.length > 0) { %> 
-      <% for (let club of clubs) { %>
-        <a href=<%= club.url %>>
-          <img style="height:100px;width:100px" src=<%= club.image %> alt="No available image">
-          <h3><%= club.name %></h3>
-        </a>
-        <hr>
-      <% } %> 
-    <% } %>
+    
+    <div class="clubs">
+      <% if (clubs.length > 0) { %>
+        <% for (let club of clubs) { %>
+          <div class="club">
+            <a href=<%= club.url %> class="club-tile">
+              <img style="height:100px;width:100px" src=<%= club.image %> alt="No available image">
+              <h3><%= club.name %></h3>
+            </a>
+          </div>
+        <% } %>
+      <% } %>
+    </div>
+
   </body>
 </html>

@@ -10,17 +10,21 @@
     <h1><%= title %></h1>
 
 
-    <% if (players.length > 0) { %> 
-      <% for (let player of players) { %>
-        <a href=<%= player.url %>>
-          <img style="height:100px;width:100px" src=<%= player.image %>>
-          <h3><%= player.name %> - <%=player.rating %></h3>
-        </a>
-        <a href=<%= player.club.url %>>
-          <img style="height:60px;width:60px" src=<%= player.club.image %>>
-        </a>
-        <hr>
-      <% } %> 
-    <% } %>
+    <div class="players">
+      <% if (players.length > 0) { %>
+        <% for (let player of players) { %>
+          <div class="player">
+            <a href=<%= player.url %> class="player-avatar">
+              <img style="height:100px;width:100px" src=<%= player.image %>>
+              <h3><%= player.name %> - <%=player.rating %></h3>
+            </a>
+            <a href=<%= player.club.url %> class="player-club">
+              <img style="height:60px;width:60px" src=<%= player.club.image %>>
+            </a>
+          </div>
+        <% } %>
+      <% } %>
+    </div>
+
   </body>
 </html>
