@@ -14,17 +14,17 @@
       <label for="position">Position: </label>
       <select name="position" id="position">
         <option value=null selected></option>
-        <option value="Goalkeeper">Goalkeeper</option>
-        <option value="Defender">Defender</option>
-        <option value="Midfielder">Midfielder</option>
-        <option value="Forward">Forward</option>
+        <option value="Goalkeeper" <%= (player.position === "Goalkeeper") ? "selected" : "" %>>Goalkeeper</option>
+        <option value="Defender" <%= (player.position === "Defender") ? "selected" : "" %>>Defender</option>
+        <option value="Midfielder" <%= (player.position === "Midfielder") ? "selected" : "" %>>Midfielder</option>
+        <option value="Forward" <%= (player.position === "Forward") ? "selected" : "" %>>Forward</option>
       </select>
 
       <label for="club">Club: </label>
       <select name="club" id="club">
         <option value=null selected></option>
         <% for (const club of clubs) { %>
-          <option value=<%= club._id %>><%= club.name %></option>
+          <option value=<%= club._id %> <%= (player.club == club._id) ? "selected" : "" %>><%= club.name %></option>
         <% } %>
       </select>
 
@@ -37,7 +37,7 @@
       <label for="image">Player Image URL: </label>
       <input id="image" type="text" name="image" value="<%= (player) ? player.image : "" %>">
 
-      <button type="sumit"><%= (player) ? "Update Player" : "Add Player" %></button>
+      <button type="submit"><%= (player) ? "Update Player" : "Add Player" %></button>
     </form>
 
     <ul>
