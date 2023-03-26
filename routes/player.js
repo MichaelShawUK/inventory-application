@@ -3,6 +3,10 @@ const router = express.Router();
 const player_controller = require("../controllers/playerController");
 
 router.get("/", player_controller.player_list);
+router.get("/goalkeepers", player_controller.goalkeepers);
+router.get("/defenders", player_controller.defenders);
+router.get("/midfielders", player_controller.midfielders);
+router.get("/forwards", player_controller.forwards);
 router.get("/create", player_controller.player_create_get);
 router.post("/create", player_controller.player_create_post);
 router.get("/:id/delete", player_controller.player_delete_get);

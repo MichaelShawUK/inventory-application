@@ -182,3 +182,47 @@ exports.player_info = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.goalkeepers = async (req, res, next) => {
+  try {
+    const goalkeepers = await Player.find({ position: "Goalkeeper" })
+      .populate("club")
+      .sort({ rating: -1 });
+    res.render("players", { title: "Goalkeepers", players: goalkeepers });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.defenders = async (req, res, next) => {
+  try {
+    const defenders = await Player.find({ position: "Defender" })
+      .populate("club")
+      .sort({ rating: -1 });
+    res.render("players", { title: "Defenders", players: defenders });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.midfielders = async (req, res, next) => {
+  try {
+    const midfielders = await Player.find({ position: "Midfielder" })
+      .populate("club")
+      .sort({ rating: -1 });
+    res.render("players", { title: "Midfielders", players: midfielders });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.forwards = async (req, res, next) => {
+  try {
+    const forwards = await Player.find({ position: "Forward" })
+      .populate("club")
+      .sort({ rating: -1 });
+    res.render("players", { title: "Forwards", players: forwards });
+  } catch (err) {
+    return next(err);
+  }
+};
