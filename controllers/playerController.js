@@ -5,7 +5,7 @@ const { body, validationResult } = require("express-validator");
 
 exports.player_list = async (req, res, next) => {
   try {
-    const players = await Player.find().populate("club");
+    const players = await Player.find().populate("club").sort({ rating: -1 });
     res.render("players", { title: "All Players", players });
   } catch (err) {
     return next(err);
