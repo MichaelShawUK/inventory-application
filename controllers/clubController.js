@@ -65,7 +65,6 @@ exports.club_delete_post = async (req, res, next) => {
   try {
     const club = await Club.findById(req.params.id);
     const players = await Player.find({ club: req.body.id });
-    console.log(players);
     if (players.length > 0) {
       res.render("club_delete", {
         title: "Delete Club",

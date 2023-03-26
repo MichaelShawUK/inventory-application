@@ -94,8 +94,13 @@ exports.player_delete_get = async (req, res, next) => {
   }
 };
 
-exports.player_delete_post = (req, res, next) => {
-  res.send("PLAYER DELETE POST");
+exports.player_delete_post = async (req, res, next) => {
+  try {
+    await Player.deleteOne({ _id: req.params.id });
+    res.redirect("/player");
+  } catch (err) {
+    return next(err);
+  }
 };
 
 exports.player_update_get = (req, res, next) => {
