@@ -6,8 +6,6 @@
   </head>
   <body>
     <% include header %>
-    <a href=<%= "/player/"+player._id+"/update" %>>Update Player</a>
-    <a href=<%= "/player/"+player._id+"/delete" %>>Delete Player</a>
 
     <h1><%= player.name %></h1>
     <img style="height:100px;width:100px" src=<%= player.image %>>
@@ -19,6 +17,12 @@
     <p><%= player.position %></p>
     <p><%= player.country %></p>
     <hr>
+
+    <form method="POST" action="">
+      <p>Confirm you want to delete <%= player.name %>?</p>
+      <input id="id" name="id" type="text" hidden value=<%= player._id %>>
+      <button type="submit">Delete</button>
+    </form>
 
   </body>
 </html>

@@ -85,8 +85,13 @@ exports.player_create_post = [
   },
 ];
 
-exports.player_delete_get = (req, res, next) => {
-  res.send("PLAYER DELETE GET");
+exports.player_delete_get = async (req, res, next) => {
+  try {
+    const player = await Player.findById(req.params.id).populate("club");
+    res.render("player_delete", { title: "Delete Player", player });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 exports.player_delete_post = (req, res, next) => {
