@@ -1,6 +1,6 @@
 body {
   background: rgb(10, 71, 121);
-  padding: 50px;
+  padding: 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   color: #fff;
 }
@@ -53,4 +53,44 @@ a {
 .club-tile:hover {
   background-color: rgb(8, 61, 104);
   border-radius: 10px;
+}
+
+nav a {
+  text-decoration: none;
+  background: white;
+  padding: 10px;
+  color: black;
+  font-weight: bold;
+  border-bottom-right-radius: 5px;
+}
+
+nav a:hover {
+  background-color: lightsteelblue;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  /* justify-content: center; */
+  margin-bottom: 10px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 120px 150px;
+  row-gap: 5px;
+}
+
+form button {
+  margin-top: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  padding: 10px;
+  border-bottom-right-radius: 5px;
+}
+
+form button:hover {
+  background-color: lightsteelblue;
 }
